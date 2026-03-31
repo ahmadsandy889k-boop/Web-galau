@@ -3,241 +3,244 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Galau by Shandi</title>
+<title>Web Galau</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Sacramento&family=Roboto&display=swap');
-
 body {
   margin: 0;
-  padding: 0;
-  height: 100vh;
-  font-family: 'Roboto', sans-serif;
-  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f0f0f, #1a001a);
+  color: white;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  text-align: center;
+  height: 100vh;
 }
 
-h1 {
-  font-family: 'Sacramento', cursive;
-  font-size: 3em;
-}
-
-textarea {
+/* CARD */
+.container {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
   width: 90%;
   max-width: 400px;
-  height: 100px;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255, 77, 109, 0.2);
 }
 
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background-color: #e74c3c;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
+/* TITLE */
+h1 {
+  margin-bottom: 10px;
+  color: #ff4d6d;
 }
 
-#quotes {
-  margin-top: 20px;
-  font-style: italic;
-  white-space: pre-line;
-  max-width: 400px;
-}
-
-footer {
-  position: absolute;
-  bottom: 10px;
+/* NAMA */
+.nama {
   font-size: 14px;
   opacity: 0.7;
+  margin-bottom: 20px;
 }
 
-/* efek hujan */
-.raindrop {
-  position: absolute;
-  width: 2px;
-  height: 15px;
-  background: rgba(255,255,255,0.3);
-  animation: fall linear infinite;
+/* QUOTE */
+.quote {
+  font-size: 16px;
+  min-height: 80px;
+  margin: 20px 0;
 }
 
-@keyframes fall {
-  from { transform: translateY(-20px); }
-  to { transform: translateY(100vh); }
+/* BUTTON */
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 15px;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 15px;
+  font-size: 12px;
+  opacity: 0.5;
 }
 </style>
 </head>
 
 <body>
 
-<h1>💔 Web Galau 💔</h1>
+<div class="container">
+  <h1>💔 Web Galau</h1>
+  <div class="nama" id="nama"></div>
 
-<textarea id="curhat" placeholder="Tulis curhatmu..."></textarea><br>
+  <div class="quote" id="quote">Klik untuk mulai...</div>
 
-<button onclick="kirimCurhat()">Kirim Curhat</button>
-<button onclick="shareWA()">Share ke WhatsApp</button>
+  <button onclick="nextQuote()">💭 Quote</button>
+  <button onclick="playMusic()">🎧 Musik</button>
+  <button onclick="shareWA()">📲 Share</button>
 
-<div id="quotes"></div>
+  <div class="footer">made by Ahmad Shandi</div>
+</div>
 
-<footer>
-© 2026 Dibuat oleh Shandi
-</footer>
+<audio id="musik" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b0a0b.mp3?filename=sad-piano-ambient-110997.mp3">
+</audio>
 
 <script>
-let lastText = "";
-let lastQuote = "";
 
+// NAMA
+const namaText = "Ahmad Shandi";
+let namaIndex = 0;
+
+function ketikNama() {
+  if (namaIndex < namaText.length) {
+    document.getElementById("nama").innerHTML += namaText.charAt(namaIndex);
+    namaIndex++;
+    setTimeout(ketikNama, 100);
+  }
+}
+ketikNama();
+
+// QUOTES
 const quotes = [
-"Aku lelah berharap pada yang tak pasti.",
-"Dia bahagia, tapi bukan denganku.",
-"Aku masih di sini, tapi kamu sudah pergi.",
-"Ternyata aku hanya persinggahan.",
-"Senyumku hanya topeng dari luka.",
-"Kamu berubah, atau aku yang terlalu berharap?",
-"Aku belajar melepas, meski sakit.",
-"Tidak semua yang diperjuangkan akan dimiliki.",
+"Aku diam bukan karena tak peduli, tapi karena lelah berharap.",
+"Kamu pergi tanpa alasan, aku bertahan tanpa kepastian.",
+"Yang paling sakit itu bukan kehilangan, tapi dilupakan.",
+"Aku masih di sini, tapi kamu sudah bukan milikku.",
+"Cinta yang tulus sering kali berakhir sendiri.",
+"Aku pura-pura kuat, padahal dalam hati hancur.",
+"Rindu ini tidak tahu harus pulang ke mana.",
+"Kita dekat, tapi tidak pernah benar-benar bersama.",
+"Aku kalah dari seseorang yang datang belakangan.",
+"Kamu bahagia, aku pura-pura ikhlas.",
+"Kadang yang paling menyakitkan adalah kenangan.",
+"Aku berharap kamu kembali, meski tahu itu tidak mungkin.",
+"Cinta ini terlalu dalam untuk dilupakan.",
+"Kamu adalah luka yang aku simpan rapi.",
+"Aku tersenyum, tapi hatiku menangis.",
+"Kita pernah dekat, sekarang hanya asing.",
+"Aku tidak membencimu, aku hanya kecewa.",
+"Kamu berubah, dan aku harus menerima.",
+"Aku lelah mencintai sendirian.",
+"Kenapa yang tulus selalu tersakiti?",
+"Aku masih menunggu, meski kamu sudah pergi.",
 "Kamu adalah alasan aku belajar ikhlas.",
-"Aku rindu, tapi tak bisa kembali.",
-"Terlalu dalam mencintai, terlalu sakit ditinggalkan.",
-"Aku bukan pilihan, hanya cadangan.",
-"Kamu pernah jadi rumah, sekarang jadi kenangan.",
-"Aku kuat, tapi tidak sekuat itu.",
-"Berjuang sendiri itu melelahkan.",
-"Aku pura-pura bahagia, padahal hancur.",
-"Cinta sepihak itu nyata dan menyakitkan.",
-"Aku hanya ingin dihargai, bukan diabaikan.",
-"Waktu tidak menyembuhkan, hanya membiasakan.",
-"Aku kehilangan kamu, sekaligus diriku.",
-"Kenangan lebih setia daripada manusia.",
-"Aku tetap di sini, walau kamu tak peduli.",
-"Terlalu berharap adalah kesalahan terbesarku.",
-"Aku belajar tersenyum dari luka.",
-"Hujan selalu tahu bagaimana perasaanku.",
-"Aku diam bukan berarti tidak peduli.",
-"Kamu hadir, lalu pergi tanpa alasan.",
-"Aku hanya ingin kamu mengerti, bukan pergi.",
-"Cinta tak harus memiliki, tapi tetap sakit.",
-"Aku kuat karena terbiasa terluka.",
-"Kamu berubah tanpa penjelasan.",
-"Aku masih menunggu yang tak pasti.",
-"Semua terasa salah sejak kamu pergi.",
+"Aku kehilanganmu tanpa pernah memiliki.",
+"Semua terasa sia-sia ketika kamu pergi.",
+"Aku ingin lupa, tapi hati tidak bisa.",
+"Kamu bahagia tanpa aku, itu sudah cukup menyakitkan.",
+"Aku hanya ingin dimengerti, bukan ditinggalkan.",
+"Cinta ini salah waktu, salah orang.",
+"Aku bukan pilihanmu, hanya persinggahan.",
 "Aku rindu versi kamu yang dulu.",
-"Tidak semua cerita punya akhir bahagia.",
-"Aku kehilangan arah tanpa kamu.",
-"Kamu bahagia, itu sudah cukup meski tanpa aku.",
-"Aku hanya bayangan di hidupmu.",
-"Perasaan ini nyata, tapi kamu tidak.",
-"Aku terlalu tulus untuk ditinggalkan.",
-"Aku mencoba lupa, tapi selalu gagal.",
-"Kamu bukan lagi milikku, tapi masih di hatiku.",
-"Aku ingin melupakan, tapi hati menolak.",
-"Aku hanya cerita yang kamu lupakan.",
-"Kamu datang memberi harapan, lalu pergi meninggalkan luka.",
-"Aku lelah menjadi yang selalu mengalah.",
-"Aku mencintai, tapi tak dicintai kembali.",
-"Kamu adalah luka yang tak terlihat.",
-"Aku kuat di luar, hancur di dalam.",
-"Rindu ini tak pernah sampai.",
-"Aku hanya ingin berhenti merasa sakit.",
-"Aku terlalu dalam untuk kamu yang dangkal.",
-"Kamu alasan aku terluka.",
-"Aku tidak baik-baik saja, hanya terlihat saja.",
-"Aku menunggu yang tak akan kembali.",
-"Aku masih berharap, meski tahu mustahil.",
-"Aku terlalu percaya, akhirnya kecewa.",
-"Kamu meninggalkan tanpa penjelasan.",
-"Aku hanya ingin didengar.",
-"Aku mencintai dengan cara yang salah.",
-"Kamu adalah kesalahan terindah.",
+"Aku mencoba kuat, tapi kenangan terlalu berat.",
+"Kamu meninggalkan aku dengan banyak tanya.",
+"Aku mencintai kamu dalam diam.",
+"Kita bukan tidak cocok, hanya tidak berjodoh.",
+"Aku terlalu berharap pada yang tidak pasti.",
+"Kamu hadir hanya untuk mengajarkanku sakit.",
+"Aku tersenyum di luar, hancur di dalam.",
+"Kamu adalah cerita yang sulit aku akhiri.",
+"Aku masih menyebut namamu dalam doa.",
+"Kamu pergi tanpa pamit, meninggalkan luka.",
+"Aku tidak baik-baik saja, hanya terbiasa.",
+"Cinta ini indah, tapi berakhir luka.",
+"Aku belajar melepaskan meski tidak rela.",
+"Kamu bukan lagi rumahku.",
+"Aku tetap di sini, meski kamu sudah pergi jauh.",
+"Kita pernah saling, sekarang saling asing.",
+"Aku ingin kembali ke waktu saat kamu masih peduli.",
+"Kamu berubah, dan aku kehilangan segalanya.",
+"Aku rindu, tapi kamu tidak.",
+"Cinta ini tidak pernah cukup untukmu.",
+"Aku hanya pilihan kedua.",
+"Aku lelah berharap pada yang tidak pasti.",
+"Kamu adalah luka yang paling aku jaga.",
+"Aku diam karena capek menjelaskan perasaan.",
+"Aku kalah oleh keadaan.",
+"Kamu bahagia, itu cukup walau bukan denganku.",
+"Aku terlalu dalam mencintai, hingga sulit keluar.",
+"Kamu meninggalkan aku tanpa penjelasan.",
+"Aku tidak tahu harus berhenti atau bertahan.",
+"Kita hancur karena ego, bukan karena kurang cinta.",
+"Aku menunggumu, tapi kamu tidak pernah kembali.",
 "Aku kehilangan arah sejak kamu pergi.",
-"Aku masih bertahan, entah sampai kapan.",
-"Aku berharap kamu kembali, walau tak mungkin.",
-"Aku tidak pernah benar-benar kamu miliki.",
-"Aku hanya pengisi waktu luangmu.",
-"Kamu adalah luka yang terus terbuka.",
-"Aku mencintai dalam diam.",
-"Aku rindu, tapi tak bisa menghubungi.",
-"Aku hanya bisa melihat dari jauh.",
-"Aku ingin berhenti, tapi hati tak mau.",
-"Aku terlalu berharap pada yang salah.",
-"Aku ingin melupakan, tapi selalu ingat.",
-"Aku tersenyum, tapi hati menangis.",
-"Aku hanya ingin bahagia, itu saja.",
-"Aku berusaha kuat, walau lelah.",
-"Aku tetap di sini, meski sendiri.",
-"Aku kehilangan segalanya saat kehilanganmu.",
-"Aku hanya ingin kamu tahu perasaanku.",
-"Aku mencintai tanpa balasan.",
-"Aku terluka karena terlalu peduli.",
-"Aku tidak pernah cukup untukmu.",
-"Aku hanya kenangan bagimu.",
-"Aku ingin kembali ke masa lalu.",
-"Aku terlalu berharap pada mimpi.",
-"Aku hanya ingin kamu kembali.",
-"Aku mencintai kamu lebih dari diriku sendiri.",
-"Aku kehilangan diriku saat mencintaimu.",
-"Aku ingin berhenti mencintai, tapi tak bisa.",
-"Aku hanya bisa diam melihatmu bahagia.",
-"Aku adalah luka yang kamu tinggalkan.",
-"Aku terlalu dalam mencintai kamu.",
-"Aku ingin menghilang dari semua ini."
+"Kamu adalah kenangan yang tidak bisa dihapus.",
+"Aku mencoba melupakan, tapi gagal lagi.",
+"Kamu yang dulu bukan kamu yang sekarang.",
+"Aku mencintaimu sendirian, itu melelahkan.",
+"Aku tidak pernah benar-benar siap kehilanganmu.",
+"Kamu datang membawa bahagia, pergi membawa luka.",
+"Aku terjebak dalam kenangan kita.",
+"Aku ingin membencimu, tapi tidak bisa.",
+"Kamu terlalu berarti untuk dilupakan.",
+"Aku hanyalah cerita sementara bagimu.",
+"Kamu pergi saat aku paling membutuhkanmu.",
+"Aku belajar tersenyum di atas luka.",
+"Kamu meninggalkan jejak yang sulit hilang.",
+"Aku mencoba ikhlas, meski hati menolak.",
+"Kamu bukan lagi milikku, tapi masih di hatiku.",
+"Aku tetap mencintaimu dalam diam.",
+"Kita tidak berakhir, kita hanya berhenti.",
+"Aku lelah berpura-pura tidak peduli.",
+"Kamu membuatku percaya lalu pergi.",
+"Aku kehilangan diriku sejak kehilanganmu.",
+"Kamu bahagia, dan aku belajar menerima.",
+"Aku hanya ingin kamu kembali, walau sebentar.",
+"Aku rindu kita yang dulu.",
+"Aku menyimpan semua rasa sendiri.",
+"Kamu alasan aku tersenyum, sekaligus menangis.",
+"Aku jatuh cinta sendirian lagi.",
+"Kamu bukan takdirku, hanya pelajaran.",
+"Aku terlalu percaya, hingga akhirnya terluka.",
+"Kamu pergi tanpa melihat ke belakang.",
+"Aku tetap di sini, menunggu yang tak pasti.",
+"Kamu adalah bagian yang hilang dariku.",
+"Aku belajar mencintai tanpa memiliki.",
+"Kamu membuatku lupa diri, lalu pergi.",
+"Aku ingin berhenti mencintaimu, tapi tidak bisa.",
+"Kamu hanya singgah, bukan menetap.",
+"Aku terlalu berharap pada yang tidak pasti.",
+"Kamu adalah luka yang tidak terlihat.",
+"Aku menahan semuanya sendiri.",
+"Kamu pergi saat aku butuh kamu.",
+"Aku mencoba kuat, tapi aku lelah.",
+"Kamu adalah rumah yang kini hilang.",
+"Aku masih berharap, meski percuma.",
+"Kamu mengubah segalanya dalam hidupku.",
+"Aku tidak tahu harus bagaimana tanpa kamu.",
+"Kamu membuatku jatuh, lalu meninggalkan.",
+"Aku hanya ingin dimengerti.",
+"Kamu membuatku merasa cukup, lalu kurang.",
+"Aku rindu, tapi kamu tidak peduli."
 ];
 
-function kirimCurhat() {
-  let text = document.getElementById('curhat').value;
+let i = 0;
 
-  if(text.trim() === "") {
-    alert("Isi dulu curhatmu 😢");
-    return;
-  }
-
-  let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-
-  lastText = text;
-  lastQuote = randomQuote;
-
-  document.getElementById('quotes').innerText =
-    "💬 Curhat kamu:\n" + text +
-    "\n\n💭 Quote:\n" + randomQuote;
+function nextQuote() {
+  document.getElementById("quote").innerText = quotes[i];
+  i = (i + 1) % quotes.length;
 }
 
+// MUSIK
+function playMusic() {
+  document.getElementById("musik").play();
+}
+
+// SHARE
 function shareWA() {
-  if(lastText === "") {
-    alert("Isi curhat dulu 😢");
-    return;
-  }
-
-  let message =
-    "💔 Curhat dari Web Galau 💔\n\n" +
-    "💬 " + lastText + "\n\n" +
-    "💭 " + lastQuote + "\n\n" +
-    "Dibuat oleh Shandi";
-
-  let url = "https://wa.me/?text=" + encodeURIComponent(message);
-  window.open(url, "_blank");
+  let text = document.getElementById("quote").innerText;
+  let pesan = text + "\n\n💔 dari Ahmad Shandi";
+  window.open("https://wa.me/?text=" + encodeURIComponent(pesan));
 }
 
-// hujan
-function createRain() {
-  for(let i=0;i<120;i++){
-    let drop = document.createElement("div");
-    drop.className = "raindrop";
-    drop.style.left = Math.random()*window.innerWidth+"px";
-    drop.style.animationDuration = (0.5+Math.random())+"s";
-    document.body.appendChild(drop);
-  }
-}
-createRain();
 </script>
 
 </body>
