@@ -89,8 +89,8 @@ button:hover {
   <div class="footer">made by Ahmad Shandi</div>
 </div>
 
-<audio id="musik" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b0a0b.mp3?filename=sad-piano-ambient-110997.mp3">
+<audio id="musik" loop preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_115b9b0a0b.mp3?filename=sad-piano-ambient-110997.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -231,8 +231,16 @@ function nextQuote() {
 
 // MUSIK
 function playMusic() {
-  document.getElementById("musik").play();
+  let audio = document.getElementById("musik");
+  audio.play().catch(() => {
+    alert("Klik lagi biar musik jalan 🎧");
+  });
 }
+
+  document.body.addEventListener("click", function() {
+  let audio = document.getElementById("musik");
+  audio.play();
+}, { once: true });
 
 // SHARE
 function shareWA() {
