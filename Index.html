@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Galau by Shandi</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&family=Roboto&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Sacramento', cursive;
+  font-size: 3em;
+}
+
+textarea {
+  width: 90%;
+  max-width: 400px;
+  height: 100px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e74c3c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#quotes {
+  margin-top: 20px;
+  font-style: italic;
+  white-space: pre-line;
+  max-width: 400px;
+}
+
+footer {
+  position: absolute;
+  bottom: 10px;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* efek hujan */
+.raindrop {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: rgba(255,255,255,0.3);
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(100vh); }
+}
+</style>
+</head>
+
+<body>
+
+<h1>💔 Web Galau 💔</h1>
+
+<textarea id="curhat" placeholder="Tulis curhatmu..."></textarea><br>
+
+<button onclick="kirimCurhat()">Kirim Curhat</button>
+<button onclick="shareWA()">Share ke WhatsApp</button>
+
+<div id="quotes"></div>
+
+<footer>
+© 2026 Dibuat oleh Shandi
+</footer>
+
+<script>
+let lastText = "";
+let lastQuote = "";
+
+const quotes = [
+"Aku lelah berharap pada yang tak pasti.",
+"Dia bahagia, tapi bukan denganku.",
+"Aku masih di sini, tapi kamu sudah pergi.",
+"Ternyata aku hanya persinggahan.",
+"Senyumku hanya topeng dari luka.",
+"Kamu berubah, atau aku yang terlalu berharap?",
+"Aku belajar melepas, meski sakit.",
+"Tidak semua yang diperjuangkan akan dimiliki.",
+"Kamu adalah alasan aku belajar ikhlas.",
+"Aku rindu, tapi tak bisa kembali.",
+"Terlalu dalam mencintai, terlalu sakit ditinggalkan.",
+"Aku bukan pilihan, hanya cadangan.",
+"Kamu pernah jadi rumah, sekarang jadi kenangan.",
+"Aku kuat, tapi tidak sekuat itu.",
+"Berjuang sendiri itu melelahkan.",
+"Aku pura-pura bahagia, padahal hancur.",
+"Cinta sepihak itu nyata dan menyakitkan.",
+"Aku hanya ingin dihargai, bukan diabaikan.",
+"Waktu tidak menyembuhkan, hanya membiasakan.",
+"Aku kehilangan kamu, sekaligus diriku.",
+"Kenangan lebih setia daripada manusia.",
+"Aku tetap di sini, walau kamu tak peduli.",
+"Terlalu berharap adalah kesalahan terbesarku.",
+"Aku belajar tersenyum dari luka.",
+"Hujan selalu tahu bagaimana perasaanku.",
+"Aku diam bukan berarti tidak peduli.",
+"Kamu hadir, lalu pergi tanpa alasan.",
+"Aku hanya ingin kamu mengerti, bukan pergi.",
+"Cinta tak harus memiliki, tapi tetap sakit.",
+"Aku kuat karena terbiasa terluka.",
+"Kamu berubah tanpa penjelasan.",
+"Aku masih menunggu yang tak pasti.",
+"Semua terasa salah sejak kamu pergi.",
+"Aku rindu versi kamu yang dulu.",
+"Tidak semua cerita punya akhir bahagia.",
+"Aku kehilangan arah tanpa kamu.",
+"Kamu bahagia, itu sudah cukup meski tanpa aku.",
+"Aku hanya bayangan di hidupmu.",
+"Perasaan ini nyata, tapi kamu tidak.",
+"Aku terlalu tulus untuk ditinggalkan.",
+"Aku mencoba lupa, tapi selalu gagal.",
+"Kamu bukan lagi milikku, tapi masih di hatiku.",
+"Aku ingin melupakan, tapi hati menolak.",
+"Aku hanya cerita yang kamu lupakan.",
+"Kamu datang memberi harapan, lalu pergi meninggalkan luka.",
+"Aku lelah menjadi yang selalu mengalah.",
+"Aku mencintai, tapi tak dicintai kembali.",
+"Kamu adalah luka yang tak terlihat.",
+"Aku kuat di luar, hancur di dalam.",
+"Rindu ini tak pernah sampai.",
+"Aku hanya ingin berhenti merasa sakit.",
+"Aku terlalu dalam untuk kamu yang dangkal.",
+"Kamu alasan aku terluka.",
+"Aku tidak baik-baik saja, hanya terlihat saja.",
+"Aku menunggu yang tak akan kembali.",
+"Aku masih berharap, meski tahu mustahil.",
+"Aku terlalu percaya, akhirnya kecewa.",
+"Kamu meninggalkan tanpa penjelasan.",
+"Aku hanya ingin didengar.",
+"Aku mencintai dengan cara yang salah.",
+"Kamu adalah kesalahan terindah.",
+"Aku kehilangan arah sejak kamu pergi.",
+"Aku masih bertahan, entah sampai kapan.",
+"Aku berharap kamu kembali, walau tak mungkin.",
+"Aku tidak pernah benar-benar kamu miliki.",
+"Aku hanya pengisi waktu luangmu.",
+"Kamu adalah luka yang terus terbuka.",
+"Aku mencintai dalam diam.",
+"Aku rindu, tapi tak bisa menghubungi.",
+"Aku hanya bisa melihat dari jauh.",
+"Aku ingin berhenti, tapi hati tak mau.",
+"Aku terlalu berharap pada yang salah.",
+"Aku ingin melupakan, tapi selalu ingat.",
+"Aku tersenyum, tapi hati menangis.",
+"Aku hanya ingin bahagia, itu saja.",
+"Aku berusaha kuat, walau lelah.",
+"Aku tetap di sini, meski sendiri.",
+"Aku kehilangan segalanya saat kehilanganmu.",
+"Aku hanya ingin kamu tahu perasaanku.",
+"Aku mencintai tanpa balasan.",
+"Aku terluka karena terlalu peduli.",
+"Aku tidak pernah cukup untukmu.",
+"Aku hanya kenangan bagimu.",
+"Aku ingin kembali ke masa lalu.",
+"Aku terlalu berharap pada mimpi.",
+"Aku hanya ingin kamu kembali.",
+"Aku mencintai kamu lebih dari diriku sendiri.",
+"Aku kehilangan diriku saat mencintaimu.",
+"Aku ingin berhenti mencintai, tapi tak bisa.",
+"Aku hanya bisa diam melihatmu bahagia.",
+"Aku adalah luka yang kamu tinggalkan.",
+"Aku terlalu dalam mencintai kamu.",
+"Aku ingin menghilang dari semua ini."
+];
+
+function kirimCurhat() {
+  let text = document.getElementById('curhat').value;
+
+  if(text.trim() === "") {
+    alert("Isi dulu curhatmu 😢");
+    return;
+  }
+
+  let randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+  lastText = text;
+  lastQuote = randomQuote;
+
+  document.getElementById('quotes').innerText =
+    "💬 Curhat kamu:\n" + text +
+    "\n\n💭 Quote:\n" + randomQuote;
+}
+
+function shareWA() {
+  if(lastText === "") {
+    alert("Isi curhat dulu 😢");
+    return;
+  }
+
+  let message =
+    "💔 Curhat dari Web Galau 💔\n\n" +
+    "💬 " + lastText + "\n\n" +
+    "💭 " + lastQuote + "\n\n" +
+    "Dibuat oleh Shandi";
+
+  let url = "https://wa.me/?text=" + encodeURIComponent(message);
+  window.open(url, "_blank");
+}
+
+// hujan
+function createRain() {
+  for(let i=0;i<120;i++){
+    let drop = document.createElement("div");
+    drop.className = "raindrop";
+    drop.style.left = Math.random()*window.innerWidth+"px";
+    drop.style.animationDuration = (0.5+Math.random())+"s";
+    document.body.appendChild(drop);
+  }
+}
+createRain();
+</script>
+
+</body>
+  </html>
